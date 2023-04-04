@@ -5,4 +5,4 @@ import webbrowser
 #    html = response.read()
 #print(html)
 
-webbrowser.open('file:///C:/Users/utente/Desktop/Progetto%20lavoro%20Atroos/Carrello_Atroos/FE.html')
+webbrowser.open('file:///C:/Users/marco/Desktop/Progetto%20lavoro/Carrello_Atroos/PaginaHome.html')
