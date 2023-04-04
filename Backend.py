@@ -90,10 +90,14 @@ WHERE orders.Stato = 'Pending' and orders.Utente = """
 #    print(result)
 
 articoli_ordine = mostra_articoli_carrello('1', mostra_articoli_utente)
+totale_ordine = 0
 for articolo in articoli_ordine:
+    totale_ordine += articolo[1]*articolo[2]
     print(articolo[0], end=' ')
     print(articolo[1], end=' ')
     print(articolo[2])
+
+numero_art_ord = len(articoli_ordine)
 
 articoli_negozio = read_query(connection, mostra_articoli)
 
@@ -103,6 +107,9 @@ articoli_negozio = read_query(connection, mostra_articoli)
 def nome_articolo():
    return render_template('PaginaHome.html', articoli = articoli_negozio)
 
+@app.route('/Carrello')
+def Carrello():
+    return render_template('PaginaCarrello.html', num_art_ord = numero_art_ord, articoli_ord = articoli_ordine, totale = totale_ordine)
 
 if __name__ == '__main__':
    app.run()

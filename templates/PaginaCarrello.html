@@ -37,7 +37,9 @@ img {
               </a>
               </div>
               <div>
-              <button class="btn btn-primary" type="button" style="font-size: 20px; margin-top: 3px;"><i class="fa fa-home"></i> Home</button>
+              <button class="btn btn-primary" type="button" style="font-size: 20px; margin-top: 3px;" onclick="home()">
+                <i class="fa fa-home"></i> Home
+              </button>
               </div>
               </div>
 </nav>
@@ -45,21 +47,27 @@ img {
 <div class="container-fluid" >
     
     <h1 style = "font-size:50px; color: blue; text-align: left; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Carrello</h1>
-    <br>
+    
+
+    {% if num_art_ord == 0 %}
     <p style="font-size: 30px;">Il carrello è attualmente vuoto</p>
     <br>
+    {% endif %}
+
+
+    {% for articolo_ord in articoli_ord %}
   <div class="card bg-light text-dark">
     <div class="card-body">
         <div class="row">
             <div class="col">
             <img src="https://fthmb.tqn.com/pPeGs_p0LNCDzfh6Afh5VRgVCFg=/5472x3648/filters:fill(auto,1)/close-up-of-penne-arabiata-in-bowl-683842303-587e99035f9b584db3432942.jpg" alt="Foto pasta" width="50%" height="100%">
             </div>
-            <div class="col" style="font-size: 30px; margin: auto;">Articolo</div>
-            <div class="col" style="font-size: 23px; margin: auto;">Prezzo €</div>
+            <div class="col" style="font-size: 30px; margin: auto;">{{ articolo_ord[0] }}</div>
+            <div class="col" style="font-size: 23px; margin: auto;">{{ articolo_ord[1] }} €</div>
             <div class="col" style="margin: auto;">
                 <div class="dropdown">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                      Quantità: x
+                      Quantità: {{ articolo_ord[2] }}
                     </button>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="#">1</a></li>
@@ -71,16 +79,13 @@ img {
             <div class="col" style="margin: auto;">
                 <button class="btn btn-primary" type="button">Rimuovi articolo</button>
             </div>
-
-
         </div>
     </div>
   </div>
   <br>
-  <div class="card bg-light text-dark">
-    <div class="card-body">Light card</div>
-  </div>
-  <br>
+  {% endfor %}
+
+
   <div class="card bg-light text-dark">
     <div class="card-body">Light card</div>
   </div>
@@ -90,7 +95,7 @@ img {
         <div class="row">
             <div class="col" style="font-size: 23px; margin: auto;"></div>
             <div class="col" style="font-size: 30px; margin: auto;">Totale:</div>
-            <div class="col" style="font-size: 23px; margin: auto;">Prezzo totale €</div>
+            <div class="col" style="font-size: 23px; margin: auto;">{{ totale }} €</div>
             <div class="col" style="margin: auto;">
                 <button class="btn btn-primary" type="button">Acquista</button>
             </div>
@@ -107,5 +112,13 @@ img {
 <a href = 'http://atroos.com/'>
 <img title = 'Logo di Atroos' src = 'https://atroos.com/wp-content/uploads/2019/06/logoatroos1-1-1.png' alt = "Logo dell'azienda" style = 'width: 30%'>
 </a>
+
+<script>
+  function home()
+  {
+    location.href='/'
+  }
+</script>
+
 </body>
 </html>
