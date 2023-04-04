@@ -1,5 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
+from flask import Flask, render_template, redirect
+app = Flask(__name__)
 
 def create_db_connection(host_name, user_name, user_password, db_name):
     connection = None
@@ -67,6 +69,11 @@ SELECT *
 FROM contiene 
 """
 
+mostra_articoli = """
+SELECT Nome, Prezzo 
+FROM articles
+"""
+
 mostra_ordine = """
 SELECT orders.ID 
 FROM orders NATURAL JOIN users"""
@@ -87,3 +94,15 @@ for articolo in articoli_ordine:
     print(articolo[0], end=' ')
     print(articolo[1], end=' ')
     print(articolo[2])
+
+articoli_negozio = read_query(connection, mostra_articoli)
+
+
+
+@app.route('/')
+def nome_articolo():
+   return render_template('PaginaHome.html', articoli = articoli_negozio)
+
+
+if __name__ == '__main__':
+   app.run()

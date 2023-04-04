@@ -32,7 +32,9 @@
               <a href="https://atroos.com/">
                 <img title = 'Logo di Atroos' src="https://atroos.com/wp-content/uploads/2019/06/logoatroos1-1-1.png" alt="Logo Atroos" width="60" height="50">
               </a>
-              <button class="btn btn-primary" type="button" style="font-size: 20px; margin-top: 3px;"><i class="fa fa-home"></i> Carrello</button>
+              <button class="btn btn-primary" type="button" style="font-size: 20px; margin-top: 3px;" onclick="apriCarrello()">
+                <i class="fa fa-home"></i> Carrello
+              </button>
             </div>
             </div>
     </div>
@@ -41,6 +43,20 @@
 <div class="container-fluid" >
     <h1 style = "font-size:50px; color: blue; text-align: left; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Articoli Atroos</h1>
     <div class="row">
+      {% for articolo in articoli %}
+      <div class="col-sm-3">
+        <div class="card">
+          <img src="https://fthmb.tqn.com/pPeGs_p0LNCDzfh6Afh5VRgVCFg=/5472x3648/filters:fill(auto,1)/close-up-of-penne-arabiata-in-bowl-683842303-587e99035f9b584db3432942.jpg" class="card-img-top" alt="Foto pasta">
+          <div class="card-body">
+            <h5 class="card-title">{{ articolo[0] }}</h5>
+            <p class="card-text">{{ articolo[1] }} €</p>
+            <button class="btn btn-primary" type="button">Aggiungi al carrello</button>
+          </div>
+        </div>
+      </div> 
+      {% endfor %}
+
+      <!--
       <div class="col-sm-3">
         <div class="card">
           <img src="https://fthmb.tqn.com/pPeGs_p0LNCDzfh6Afh5VRgVCFg=/5472x3648/filters:fill(auto,1)/close-up-of-penne-arabiata-in-bowl-683842303-587e99035f9b584db3432942.jpg" class="card-img-top" alt="Foto pasta">
@@ -51,17 +67,16 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
-        <div class="card">
-          <img src="https://fthmb.tqn.com/pPeGs_p0LNCDzfh6Afh5VRgVCFg=/5472x3648/filters:fill(auto,1)/close-up-of-penne-arabiata-in-bowl-683842303-587e99035f9b584db3432942.jpg" class="card-img-top" alt="Foto pasta">
-          <div class="card-body">
-            <h5 class="card-title">Nome articolo</h5>
-            <p class="card-text">Prezzo</p>
-            <button class="btn btn-primary" type="button">Aggiungi al carrello</button>
-          </div>
-        </div>
-      </div>
+    -->
+
     </div>
+<p id="ccc"></p>
+<script>
+  function apriCarrello()
+  {
+    document.getElementById("ccc").innerHTML = "Funziona"
+  }
+</script>
 
 </body>
 
