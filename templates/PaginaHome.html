@@ -19,20 +19,20 @@
                   <div class="container-fluid">
                     <div class="dropdown">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 20px; margin-top: 3px;">               
-                <i class="fa fa-user-circle"></i> Utente
+                <i class="fa fa-user-circle"></i> {{ utenti[0][0] }} 
                         </button>
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">Utente 1</a></li>
-                          <li><a class="dropdown-item" href="#">Utente 2</a></li>
-                          <li><a class="dropdown-item" href="#">Utente 3</a></li>
+                          {% for utente in utenti %}
+                          <li><a class="dropdown-item" href="#">{{ utente[0] }}</a></li>
+                          {% endfor %}
                         </ul>
                       </div>
               <a href="https://atroos.com/">
                 <img title = 'Logo di Atroos' src="https://atroos.com/wp-content/uploads/2019/06/logoatroos1-1-1.png" alt="Logo Atroos" width="60" height="50">
               </a>
-              <button class="btn btn-primary" type="button" style="font-size: 20px; margin-top: 3px;" onclick="apriCarrello()">
+              <a class="btn btn-primary" type="button" style="font-size: 20px; margin-top: 3px;" href="{{ url_for('Carrello')}}">
                 <i class="fa fa-cart-arrow-down"></i> Carrello
-              </button>
+              </a>
             </div>
 </nav>
 
@@ -42,11 +42,11 @@
       {% for articolo in articoli %}
       <div class="col-sm-3">
         <div class="card">
-          <img src="https://fthmb.tqn.com/pPeGs_p0LNCDzfh6Afh5VRgVCFg=/5472x3648/filters:fill(auto,1)/close-up-of-penne-arabiata-in-bowl-683842303-587e99035f9b584db3432942.jpg" class="card-img-top" alt="Foto pasta">
+          <img src="{{ articolo[2] }}" class="card-img-top" alt="Foto pasta">
           <div class="card-body">
             <h5 class="card-title">{{ articolo[0] }}</h5>
             <p class="card-text">{{ articolo[1] }} €</p>
-            <button class="btn btn-primary" type="button">Aggiungi al carrello</button>
+            <button class="btn btn-primary" type="button" onclick=aggiungi_articolo()>Aggiungi al carrello</button>
           </div>
         </div>
       </div> 
@@ -69,9 +69,14 @@
 <p id="ccc"></p>
 
 <script>
-  function apriCarrello()
+  /*function apriCarrello()
   {
-    location.href='Carrello'
+    location.href='{{ url_for("Carrello", vuoto = 0)}}'
+  }*/
+
+  function aggiungi_articolo()
+  {
+    
   }
 </script>
 

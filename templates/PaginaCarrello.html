@@ -23,12 +23,12 @@ img {
     <div class="container-fluid">
                     <div class="dropdown">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 20px; margin-top: 3px;">
-                <i class="fa fa-user-circle"></i> Utente
+                <i class="fa fa-user-circle"></i> {{ utenti[0][0] }}
                         </button>
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">Utente 1</a></li>
-                          <li><a class="dropdown-item" href="#">Utente 2</a></li>
-                          <li><a class="dropdown-item" href="#">Utente 3</a></li>
+                          {% for utente in utenti %}
+                            <li><a class="dropdown-item" href="#">{{ utente[0] }}</a></li>
+                          {% endfor %}
                         </ul>
                       </div>
                       <div>
@@ -37,9 +37,9 @@ img {
               </a>
               </div>
               <div>
-              <button class="btn btn-primary" type="button" style="font-size: 20px; margin-top: 3px;" onclick="home()">
+              <a class="btn btn-primary" type="button" style="font-size: 20px; margin-top: 3px;" href="{{ url_for('Home') }}">
                 <i class="fa fa-home"></i> Home
-              </button>
+              </a>
               </div>
               </div>
 </nav>
@@ -60,7 +60,7 @@ img {
     <div class="card-body">
         <div class="row">
             <div class="col">
-            <img src="https://fthmb.tqn.com/pPeGs_p0LNCDzfh6Afh5VRgVCFg=/5472x3648/filters:fill(auto,1)/close-up-of-penne-arabiata-in-bowl-683842303-587e99035f9b584db3432942.jpg" alt="Foto pasta" width="50%" height="100%">
+            <img src="{{ articolo_ord[4] }}" alt="Foto pasta" width="50%" height="100%">
             </div>
             <div class="col" style="font-size: 30px; margin: auto;">{{ articolo_ord[0] }}</div>
             <div class="col" style="font-size: 23px; margin: auto;">{{ articolo_ord[1] }} €</div>
@@ -70,9 +70,7 @@ img {
                       Quantità: {{ articolo_ord[2] }}
                     </button>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">1</a></li>
-                      <li><a class="dropdown-item" href="#">2</a></li>
-                      <li><a class="dropdown-item" href="#">3</a></li>
+                      <li><a class="dropdown-item" href="#">{{ articolo_ord[3] }}</a></li>
                     </ul>
                   </div>
             </div>
@@ -85,23 +83,26 @@ img {
   <br>
   {% endfor %}
 
-
+<!--
   <div class="card bg-light text-dark">
     <div class="card-body">Light card</div>
   </div>
   <br>
+-->
   <div class="card bg-dark text-white">
     <div class="card-body">
         <div class="row">
             <div class="col" style="font-size: 23px; margin: auto;"></div>
             <div class="col" style="font-size: 30px; margin: auto;">Totale:</div>
             <div class="col" style="font-size: 23px; margin: auto;">{{ totale }} €</div>
+            {% if num_art_ord != 0 %}
             <div class="col" style="margin: auto;">
-                <button class="btn btn-primary" type="button">Acquista</button>
+                <button class="btn btn-primary" type="button" onclick=acq_art()>Acquista</button>
             </div>
             <div class="col" style="margin: auto;">
-                <button class="btn btn-primary" type="button">Svuota carrello</button>
+                <button class="btn btn-primary" type="button" onclick=svuota()>Svuota carrello</button>
             </div>
+            {% endif %}
         </div>
     </div>
   </div>
@@ -118,6 +119,41 @@ img {
   {
     location.href='/'
   }
+
+  function svuota()
+  {
+    if (confirm("Eliminare tutti gli articoli dal carrello?")) 
+    {
+      location.href='{{ url_for("svuotaCarrello") }}'
+    }
+  }
+
+  function acq_art()
+  {
+    if (confirm("Procedere con l'acquisto?")) 
+    {
+      location.href='{{ url_for("acquista")}}'
+    } 
+  }
+
+
+/*
+async function postData(url = "", data = {}) {
+
+const response = await fetch(url, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    body: JSON.stringify(data), 
+});
+
+return response.json();
+}
+
+postData("/Pippo", {
+str: 'Dato arrivato'
+}).then((data) => {
+console.log(data);
+});
+*/
 </script>
 
 </body>
