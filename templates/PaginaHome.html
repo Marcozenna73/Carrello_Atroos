@@ -22,9 +22,11 @@
                 <i class="fa fa-user-circle"></i> {{ utenti[0][0] }} 
                         </button>
                         <ul class="dropdown-menu">
+
                           {% for utente in utenti %}
                           <li><a class="dropdown-item" href="#">{{ utente[0] }}</a></li>
                           {% endfor %}
+
                         </ul>
                       </div>
               <a href="https://atroos.com/">
@@ -39,6 +41,7 @@
 <div class="container-fluid" >
     <h1 style = "font-size:50px; color: blue; text-align: left; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Articoli Atroos</h1>
     <div class="row">
+
       {% for articolo in articoli %}
       <div class="col-sm-3">
         <div class="card">
@@ -52,28 +55,10 @@
       </div> 
       {% endfor %}
 
-      <!--
-      <div class="col-sm-3">
-        <div class="card">
-          <img src="https://fthmb.tqn.com/pPeGs_p0LNCDzfh6Afh5VRgVCFg=/5472x3648/filters:fill(auto,1)/close-up-of-penne-arabiata-in-bowl-683842303-587e99035f9b584db3432942.jpg" class="card-img-top" alt="Foto pasta">
-          <div class="card-body">
-            <h5 class="card-title">Nome articolo</h5>
-            <p class="card-text">Prezzo</p>
-            <button class="btn btn-primary" type="button">Aggiungi al carrello</button>
-          </div>
-        </div>
-      </div>
-    -->
-
     </div>
 <p id="ccc"></p>
 
 <script>
-  /*function apriCarrello()
-  {
-    location.href='{{ url_for("Carrello", vuoto = 0)}}'
-  }*/
-
   function aggiungi_articolo()
   {
     

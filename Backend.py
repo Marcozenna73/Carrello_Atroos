@@ -70,36 +70,31 @@ connection = create_db_connection("localhost", "root", "", "carrello atroos")
 
 inserimento_ordini = """
 INSERT INTO orders(ID, Utente, Stato) VALUES 
-(1, 1, 'Pending');
-"""
+(1, 1, 'Pending');"""
 
 inserimento_utenti = """
 INSERT INTO users(Nome, Cognome, CF) VALUES
 ('Marco', 'Zennaro', 'ZNNMRC01E07L736W'),
-('Elia', 'Corò', 'CROLEI02C29L736W');
-"""
+('Mario', 'Rossi', 'RSSMRA03C03L736W');"""
 
 inserimento_articoli_in_ordini = """
 INSERT INTO contiene(Ordine, Articolo, Quantità) VALUES
 (1, 'Pasta', 5),
 (1, 'Pizza', 3),
-(1, 'Pane', 7);
-"""
+(1, 'Pane', 7);"""
 
 svuota_car = """
 DELETE 
 FROM contiene
 WHERE Ordine = """
 
-mostra_tutto = """
+mostra_contiene = """
 SELECT * 
-FROM contiene 
-"""
+FROM contiene """
 
 mostra_articoli = """
 SELECT Nome, Prezzo, Foto 
-FROM articles
-"""
+FROM articles"""
 
 mostra_ordine = """
 SELECT orders.ID 
@@ -115,11 +110,6 @@ mostra_utenti = """
 SELECT Nome 
 FROM users """
 
-#execute_query(connection, inserimento_articoli_in_ordini)
-#results = read_query(connection, mostra_tutto)
-#for result in results:
-#    print(result)
-
 articoli_ordine = mostra_articoli_carrello(1, mostra_articoli_utente)
 totale_ordine = 0
 for articolo in articoli_ordine:
@@ -130,9 +120,7 @@ for articolo in articoli_ordine:
     print(articolo[3])
 
 numero_art_ord = len(articoli_ordine)
-
 articoli_negozio = read_query(connection, mostra_articoli)
-
 utenti_db = read_query(connection, mostra_utenti)
 
 @app.route('/')
@@ -161,20 +149,8 @@ def acquista():
 def svuotaCarrello():
     svuotaCarr(1)
     return Carrello()
-
-        
+       
 #execute_query(connection, inserimento_articoli_in_ordini)
-
-#@app.route('/Hello')
-#def Hello():
-#    return render_template('Hello.html', nome = 'Beatrice')
-
-#@app.route('/Pippo', methods=['GET', 'POST'])
-#def Pippo():
-#    print("Stampa")
-#    data = json.loads(request.data)
-#    print(data)
-#    return data
 
 if __name__ == '__main__':
    app.run()

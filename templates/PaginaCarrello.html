@@ -45,15 +45,12 @@ img {
 </nav>
 
 <div class="container-fluid" >
-    
     <h1 style = "font-size:50px; color: blue; text-align: left; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Carrello</h1>
     
-
     {% if num_art_ord == 0 %}
     <p style="font-size: 30px;">Il carrello è attualmente vuoto</p>
     <br>
     {% endif %}
-
 
     {% for articolo_ord in articoli_ord %}
   <div class="card bg-light text-dark">
@@ -83,12 +80,6 @@ img {
   <br>
   {% endfor %}
 
-<!--
-  <div class="card bg-light text-dark">
-    <div class="card-body">Light card</div>
-  </div>
-  <br>
--->
   <div class="card bg-dark text-white">
     <div class="card-body">
         <div class="row">
@@ -107,7 +98,6 @@ img {
     </div>
   </div>
   <br>
-
 </div>
 
 <a href = 'http://atroos.com/'>
@@ -135,25 +125,6 @@ img {
       location.href='{{ url_for("acquista")}}'
     } 
   }
-
-
-/*
-async function postData(url = "", data = {}) {
-
-const response = await fetch(url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    body: JSON.stringify(data), 
-});
-
-return response.json();
-}
-
-postData("/Pippo", {
-str: 'Dato arrivato'
-}).then((data) => {
-console.log(data);
-});
-*/
 </script>
 
 </body>
