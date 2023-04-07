@@ -22,9 +22,9 @@
                 <i class="fa fa-user-circle"></i> {{ utenti[0][0] }} 
                         </button>
                         <ul class="dropdown-menu">
-
+                          
                           {% for utente in utenti %}
-                          <li><a class="dropdown-item" href="#">{{ utente[0] }}</a></li>
+                          <li><a class="dropdown-item" href="{{url_for('stampaUser', user=utente[0])}}">{{ utente[0] }}</a></li>
                           {% endfor %}
 
                         </ul>
@@ -49,7 +49,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ articolo[0] }}</h5>
             <p class="card-text">{{ articolo[1] }} €</p>
-            <button class="btn btn-primary" type="button" onclick=aggiungi_articolo()>Aggiungi al carrello</button>
+            <a class="btn btn-primary" type="button" href="{{url_for('aggiungiArticolo', nomeArt=articolo[0])}}">Aggiungi al carrello</a>
           </div>
         </div>
       </div> 

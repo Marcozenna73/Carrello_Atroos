@@ -61,10 +61,47 @@ def acquista_articoli(utente, art_ord):
     print(query_ordine)
     execute_query(connection, query_ordine)
 
-def svuotaCarr(ordine):
-    query_svuota = svuota_car + str(ordine)
+def svuotaCarr(utente):
+    trova_ordine = """
+    SELECT ID 
+    FROM orders 
+    WHERE Stato = 'Pending' and Utente = """ + str(utente)
+    ordine = read_query(connection, trova_ordine)
+    query_svuota = svuota_car + str(ordine[0][0])
     print(query_svuota)
     execute_query(connection, query_svuota)
+
+def aggiungiArt(nomeArt, utente):
+    trova_ordine = """
+    SELECT ID 
+    FROM orders 
+    WHERE Stato = 'Pending' and Utente = """ + str(utente)
+    ordine = read_query(connection, trova_ordine)
+    aggiungi = """
+    INSERT INTO contiene(Ordine, Articolo, Quantità) VALUES 
+    (""" + str(ordine[0][0]) + """, '""" + nomeArt + """', 1);"""
+    print(aggiungi)
+    execute_query(connection, aggiungi)
+
+def cambiaQuant(nomeArt, quantita, utente):
+    trova_ordine = """
+    SELECT ID 
+    FROM orders 
+    WHERE Stato = 'Pending' and Utente = """ + str(utente)
+    ordine = read_query(connection, trova_ordine)
+    cambiaQ = """
+    UPDATE contiene 
+    SET Quantità = """ + str(quantita) + """ 
+    WHERE Articolo = '""" + nomeArt + """' and Ordine = """ + str(ordine[0][0])
+    print(cambiaQ)
+    execute_query(connection, cambiaQ)
+
+def rimuoviArt(nome):
+    rimuovi = """
+    DELETE 
+    FROM contiene 
+    WHERE Articolo = '""" + nome + "'"
+    execute_query(connection, rimuovi)
 
 connection = create_db_connection("localhost", "root", "", "carrello atroos")
 
@@ -110,7 +147,10 @@ mostra_utenti = """
 SELECT Nome 
 FROM users """
 
-articoli_ordine = mostra_articoli_carrello(1, mostra_articoli_utente)
+numero_ordine = 1
+ID_utente = 1
+
+articoli_ordine = mostra_articoli_carrello(ID_utente, mostra_articoli_utente)
 totale_ordine = 0
 for articolo in articoli_ordine:
     totale_ordine += articolo[1]*articolo[2]
@@ -129,7 +169,7 @@ def Home():
 
 @app.route('/Carrello')
 def Carrello():
-    articoli_ordine = mostra_articoli_carrello(1, mostra_articoli_utente)
+    articoli_ordine = mostra_articoli_carrello(ID_utente, mostra_articoli_utente)
     totale_ordine = 0
     for articolo in articoli_ordine:
         totale_ordine += articolo[1]*articolo[2]
@@ -138,18 +178,38 @@ def Carrello():
 
 @app.route('/acquista')
 def acquista():
-    articoli_ordine = mostra_articoli_carrello(1, mostra_articoli_utente)
+    articoli_ordine = mostra_articoli_carrello(ID_utente, mostra_articoli_utente)
     for articolo in articoli_ordine:
         if(articolo[2] >= articolo[3]):
             return Carrello()
-    acquista_articoli(1, articoli_ordine)
+    acquista_articoli(ID_utente, articoli_ordine)
     return Carrello()
 
 @app.route('/svuotaCarrello')
 def svuotaCarrello():
-    svuotaCarr(1)
+    svuotaCarr(ID_utente)
+    return Carrello()
+
+@app.route('/<nomeArt>/aggiungiArticolo')
+def aggiungiArticolo(nomeArt):
+    aggiungiArt(nomeArt, ID_utente)
+    return Carrello()
+
+@app.route('/<nomeArt>/<int:quantita>/cambiaQuantita')
+def cambiaQuantita(nomeArt, quantita):
+    cambiaQuant(nomeArt, quantita, ID_utente)
+    return Carrello()
+
+@app.route('/<nome_art>/rimuoviArticolo')
+def rimuoviArticolo(nome_art):
+    rimuoviArt(nome_art)
     return Carrello()
        
+@app.route('/<user>/stampaUser')
+def stampaUser(user):
+    print(user)
+    return Home()
+
 #execute_query(connection, inserimento_articoli_in_ordini)
 
 if __name__ == '__main__':
