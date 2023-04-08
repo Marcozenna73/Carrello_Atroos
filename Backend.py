@@ -77,6 +77,16 @@ def aggiungiArt(nomeArt, utente):
     FROM orders 
     WHERE Stato = 'Pending' and Utente = """ + str(utente)
     ordine = read_query(connection, trova_ordine)
+    if(len(ordine) == 0):
+        ultimo_ordine = """
+        SELECT MAX(ID) 
+        FROM orders"""
+        ordine = read_query(connection, ultimo_ordine)
+        nuovo_ordine = """
+        INSERT INTO orders(ID, Utente, Stato) VALUES 
+        (""" + str(ordine[0][0] + 1) + """, """ + str(utente) + """, 'Pending');"""
+        execute_query(connection, nuovo_ordine)
+        ordine = read_query(connection, trova_ordine)
     aggiungi = """
     INSERT INTO contiene(Ordine, Articolo, Quantità) VALUES 
     (""" + str(ordine[0][0]) + """, '""" + nomeArt + """', 1);"""
