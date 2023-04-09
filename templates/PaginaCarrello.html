@@ -23,11 +23,11 @@ img {
     <div class="container-fluid">
                     <div class="dropdown">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" style="font-size: 20px; margin-top: 3px;">
-                <i class="fa fa-user-circle"></i> {{ utenti[0][0] }}
+                <i class="fa fa-user-circle"></i> {{ utenti[num_utente][0] }}
                         </button>
                         <ul class="dropdown-menu">
                           {% for utente in utenti %}
-                            <li><a class="dropdown-item" href="#">{{ utente[0] }}</a></li>
+                          <li><a class="dropdown-item" href="{{url_for('stampaUser', user=utente[0])}}">{{ utente[0] }}</a></li>
                           {% endfor %}
                         </ul>
                       </div>

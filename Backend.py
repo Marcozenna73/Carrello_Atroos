@@ -175,16 +175,19 @@ utenti_db = read_query(connection, mostra_utenti)
 
 @app.route('/')
 def Home():
-   return render_template('PaginaHome.html', articoli = articoli_negozio, utenti = utenti_db)
+   num_utente = (ID_utente - 1)
+   print("num_utente = " + str(num_utente))
+   return render_template('PaginaHome.html', articoli = articoli_negozio, utenti = utenti_db, num_utente = num_utente)
 
 @app.route('/Carrello')
 def Carrello():
+    print(ID_utente)
     articoli_ordine = mostra_articoli_carrello(ID_utente, mostra_articoli_utente)
     totale_ordine = 0
     for articolo in articoli_ordine:
         totale_ordine += articolo[1]*articolo[2]
     numero_art_ord = len(articoli_ordine)
-    return render_template('PaginaCarrello.html', num_art_ord = numero_art_ord, articoli_ord = articoli_ordine, totale = totale_ordine, utenti = utenti_db)
+    return render_template('PaginaCarrello.html', num_art_ord = numero_art_ord, articoli_ord = articoli_ordine, totale = totale_ordine, utenti = utenti_db, num_utente = (ID_utente - 1))
 
 @app.route('/acquista')
 def acquista():
@@ -217,10 +220,15 @@ def rimuoviArticolo(nome_art):
        
 @app.route('/<user>/stampaUser')
 def stampaUser(user):
+    global ID_utente
+    trova_ID_user = """
+    SELECT ID 
+    FROM users 
+    WHERE Nome = '""" + user + "'"
+    ID_user = read_query(connection, trova_ID_user)
+    ID_utente = ID_user[0][0]
     print(user)
     return Home()
-
-#execute_query(connection, inserimento_articoli_in_ordini)
 
 if __name__ == '__main__':
    app.run()
