@@ -98,7 +98,7 @@ def Carrello():
 def acquista():
     articoli_ordine = mostra_articoli_carrello(ID_utente, mostra_articoli_utente)
     for articolo in articoli_ordine:
-        if(articolo[2] >= articolo[3]):
+        if(articolo[2] > articolo[3]):
             return Carrello()
     acquista_art1 = """
     UPDATE articles 
